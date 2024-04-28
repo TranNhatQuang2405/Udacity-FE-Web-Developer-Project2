@@ -29,7 +29,14 @@ const VALUE = 150
  * Start Helper Functions
  *
 */
-
+function onNavClick(e) {
+    e.preventDefault()
+    let current = e.target
+    if (current.tagName === "LI" && current.classList.contains("menu__link")) {
+        let sectionId = current.dataset["sectionId"]
+        scrollTo(sectionId)
+    }
+}
 
 /**
  * End Helper Functions
@@ -52,7 +59,6 @@ function buildNav() {
         navSection.innerText = section.content
         navSection.className = "menu__link"
         navSection.dataset["sectionId"] = section.id
-        navSection.onclick = onNavClick
         navContainer.appendChild(navSection)
     }
 
@@ -93,10 +99,7 @@ function scrollTo(id) {
 // Build menu
 buildNav()
 // Scroll to section on link click
-function onNavClick(e) {
-    let sectionId = e.target.dataset["sectionId"]
-    scrollTo(sectionId)
-}
+document.addEventListener("click", onNavClick)
 // Set sections as active
 document.addEventListener("scroll", function () { makeActive(); });
 
